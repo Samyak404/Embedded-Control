@@ -16,8 +16,8 @@ A[0, 0] = 1
 A[0, 1] = -1
 b[0] = 0
 
-A[-1, -1] = 1
-b[-1] = 0
+A[N-1, N-1] = 1
+b[N-1] = 0
 
 for i in range(1, N-1):
     A[i, i] = (-(2 / delta_r**2) + 1 / (r_values[i] * delta_r))
