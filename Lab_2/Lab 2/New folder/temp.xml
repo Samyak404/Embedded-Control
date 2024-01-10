@@ -1,0 +1,66 @@
+<!DOCTYPE nta PUBLIC "-//Uppaal Team//DTD Flat System 1.1//EN" "http://www.it.uu.se/research/group/darts/uppaal/flat-1_1.dtd">
+<nta>
+    <!-- Elevator Template -->
+    <template>
+        <name>Elevator</name>
+        <declaration>
+            int currentFloor;
+            int targetFloor;
+            int requestQueue[6];
+            int fairness;
+        </declaration>
+        <location id="Idle">
+            <!-- Define Idle state -->
+        </location>
+        <location id="MovingUp">
+            <!-- Define MovingUp state -->
+        </location>
+        <location id="MovingDown">
+            <!-- Define MovingDown state -->
+        </location>
+        <location id="LoadingUnloading">
+            <!-- Define Loading/Unloading state -->
+        </location>
+        <init ref="Idle"/>
+        <transition>
+            <source ref="Idle"/>
+            <target ref="MovingUp"/>
+            <label>!isEmpty(requestQueue) &amp;&amp; requestQueue[0] &gt; currentFloor</label>
+            <assignment>fairness = 1-fairness;</assignment>
+        </transition>
+        <!-- Add transitions for MovingUp, MovingDown, and Loading/Unloading states -->
+        <!-- Ensure fairness in handling floor requests -->
+    </template>
+
+    <!-- Floor Template -->
+    <template>
+        <name>Floor</name>
+        <parameter type="int" name="oorNumber"/>
+        <declaration>
+            int request;
+        </declaration>
+        <location id="Idle">
+            <!-- Define Idle state -->
+        </location>
+        <location id="UpRequest">
+            <!-- Define UpRequest state -->
+        </location>
+        <location id="DownRequest">
+            <!-- Define DownRequest state -->
+        </location>
+        <init ref="Idle"/>
+        <transition>
+            <source ref="Idle"/>
+            <target ref="UpRequest"/>
+            <label>requestUp[oorNumber]?</label>
+            <synchronization>request up[oorNumber]!</synchronization>
+        </transition>
+        <!-- Add transitions for UpRequest, DownRequest, and returning to Idle states -->
+        <!-- Use synchronization channels for request up, request down, and ack -->
+    </template>
+
+    <!-- System Declaration -->
+    <system>
+        <!-- System declarations go here -->
+    </system>
+</nta>

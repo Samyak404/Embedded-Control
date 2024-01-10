@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.6//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_6.dtd'>
+<nta>
+	<declaration>// Place global declarations here.
+clock x;
+
+chan pedestrianred, pedestriangreen, pedesEWgreen, pedesEWred;</declaration>
+	<template>
+		<name x="5" y="5">Carlights_NS</name>
+		<declaration>// Place local declarations here.
+</declaration>
+		<location id="id0" x="204" y="-68">
+			<name x="221" y="-85">green</name>
+		</location>
+		<location id="id1" x="0" y="136">
+			<name x="-8" y="153">red</name>
+		</location>
+		<location id="id2" x="408" y="136">
+			<name x="348" y="153">yellow</name>
+		</location>
+		<init ref="id0"/>
+		<transition id="id3">
+			<source ref="id2"/>
+			<target ref="id2"/>
+			<label kind="guard" x="425" y="127">x&lt;=1</label>
+			<nail x="476" y="68"/>
+			<nail x="476" y="204"/>
+		</transition>
+		<transition id="id4">
+			<source ref="id2"/>
+			<target ref="id1"/>
+			<label kind="guard" x="153" y="136">x&gt;1</label>
+			<label kind="synchronisation" x="153" y="153">pedestriangreen!</label>
+			<label kind="assignment" x="153" y="170">x:=0</label>
+		</transition>
+		<transition id="id5">
+			<source ref="id0"/>
+			<target ref="id2"/>
+			<label kind="guard" x="314" y="-8">x&gt;1</label>
+			<label kind="assignment" x="314" y="17">x:=0</label>
+		</transition>
+		<transition id="id6">
+			<source ref="id1"/>
+			<target ref="id0"/>
+			<label kind="guard" x="0" y="-25">x&gt;1</label>
+			<label kind="synchronisation" x="0" y="-8">pedestrianred!</label>
+			<label kind="assignment" x="0" y="9">x:=0</label>
+		</transition>
+		<transition id="id7">
+			<source ref="id1"/>
+			<target ref="id1"/>
+			<label kind="guard" x="-59" y="127">x&lt;=1</label>
+			<nail x="-68" y="204"/>
+			<nail x="-68" y="68"/>
+		</transition>
+		<transition id="id8">
+			<source ref="id0"/>
+			<target ref="id0"/>
+			<label kind="guard" x="178" y="-136">x&lt;=1</label>
+			<nail x="136" y="-136"/>
+			<nail x="272" y="-136"/>
+		</transition>
+	</template>
+	<template>
+		<name>Carlights_EW</name>
+		<location id="id9" x="-340" y="-442">
+			<name x="-323" y="-450">red</name>
+		</location>
+		<location id="id10" x="-544" y="-238">
+			<name x="-552" y="-221">yellow</name>
+		</location>
+		<location id="id11" x="-136" y="-238">
+			<name x="-178" y="-221">green</name>
+		</location>
+		<init ref="id9"/>
+		<transition id="id12">
+			<source ref="id10"/>
+			<target ref="id9"/>
+			<label kind="guard" x="-535" y="-391">x&gt;1</label>
+			<label kind="synchronisation" x="-535" y="-374">pedesEWgreen!</label>
+			<label kind="assignment" x="-535" y="-357">x:=0</label>
+		</transition>
+		<transition id="id13">
+			<source ref="id10"/>
+			<target ref="id10"/>
+			<label kind="guard" x="-603" y="-255">x&lt;=1</label>
+			<nail x="-612" y="-306"/>
+			<nail x="-612" y="-170"/>
+		</transition>
+		<transition id="id14">
+			<source ref="id11"/>
+			<target ref="id10"/>
+			<label kind="guard" x="-357" y="-263">x&gt;1</label>
+			<label kind="assignment" x="-357" y="-229">x:=0</label>
+		</transition>
+		<transition id="id15">
+			<source ref="id11"/>
+			<target ref="id11"/>
+			<label kind="guard" x="-119" y="-255">x&lt;=1</label>
+			<nail x="-68" y="-306"/>
+			<nail x="-68" y="-170"/>
+		</transition>
+		<transition id="id16">
+			<source ref="id9"/>
+			<target ref="id11"/>
+			<label kind="guard" x="-238" y="-391">x&gt;1</label>
+			<label kind="synchronisation" x="-238" y="-374">pedesEWred!</label>
+			<label kind="assignment" x="-238" y="-357">x:=0</label>
+		</transition>
+		<transition id="id17">
+			<source ref="id9"/>
+			<target ref="id9"/>
+			<label kind="guard" x="-365" y="-510">x&lt;=1</label>
+			<nail x="-409" y="-510"/>
+			<nail x="-273" y="-510"/>
+		</transition>
+	</template>
+	<template>
+		<name>pedestrian_NS</name>
+		<location id="id18" x="-306" y="-102">
+			<name x="-348" y="-119">red</name>
+		</location>
+		<location id="id19" x="-34" y="-102">
+			<name x="-25" y="-127">green</name>
+		</location>
+		<init ref="id18"/>
+		<transition id="id20">
+			<source ref="id19"/>
+			<target ref="id18"/>
+			<label kind="synchronisation" x="-229" y="0">pedestrianred?</label>
+			<nail x="-102" y="0"/>
+			<nail x="-238" y="0"/>
+		</transition>
+		<transition id="id21">
+			<source ref="id18"/>
+			<target ref="id19"/>
+			<label kind="synchronisation" x="-238" y="-229">pedestriangreen?</label>
+			<nail x="-238" y="-204"/>
+			<nail x="-102" y="-204"/>
+		</transition>
+	</template>
+	<template>
+		<name>pedestrian_EW</name>
+		<location id="id22" x="-272" y="-68">
+			<name x="-331" y="-85">green</name>
+		</location>
+		<location id="id23" x="0" y="-68">
+			<name x="17" y="-93">red</name>
+		</location>
+		<init ref="id22"/>
+		<transition id="id24">
+			<source ref="id23"/>
+			<target ref="id22"/>
+			<label kind="synchronisation" x="-187" y="42">pedesEWgreen?</label>
+			<nail x="-68" y="34"/>
+			<nail x="-204" y="34"/>
+		</transition>
+		<transition id="id25">
+			<source ref="id22"/>
+			<target ref="id23"/>
+			<label kind="synchronisation" x="-178" y="-195">pedesEWred?</label>
+			<nail x="-204" y="-170"/>
+			<nail x="-68" y="-170"/>
+		</transition>
+	</template>
+	<system>// List one or more processes to be composed into a system.
+system Carlights_NS, Carlights_EW, pedestrian_NS, pedestrian_EW;
+</system>
+	<queries>
+		<query>
+			<formula/>
+			<comment/>
+		</query>
+	</queries>
+</nta>

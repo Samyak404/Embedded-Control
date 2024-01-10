@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.6//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_6.dtd'>
+<nta>
+	<declaration>broadcast chan g2yns, y2rns, g2yew, y2rew;
+</declaration>
+	<template>
+		<name x="9" y="9">V_NS</name>
+		<declaration>// Place local declarations here.
+</declaration>
+		<location id="id0" x="-416" y="-68">
+			<name x="-425" y="-102">Red</name>
+		</location>
+		<location id="id1" x="-272" y="-195">
+			<name x="-297" y="-229">Yellow</name>
+		</location>
+		<location id="id2" x="-544" y="-195">
+			<name x="-569" y="-229">Green</name>
+		</location>
+		<init ref="id2"/>
+		<transition id="id3">
+			<source ref="id0"/>
+			<target ref="id0"/>
+			<label kind="synchronisation" x="-442" y="9">g2yew?</label>
+			<nail x="-348" y="0"/>
+			<nail x="-484" y="0"/>
+		</transition>
+		<transition id="id4">
+			<source ref="id0"/>
+			<target ref="id2"/>
+			<label kind="synchronisation" x="-510" y="-59">y2rew?</label>
+			<label kind="comments" x="-544" y="-102">G_vehicle_NS?</label>
+			<nail x="-544" y="-68"/>
+		</transition>
+		<transition id="id5">
+			<source ref="id1"/>
+			<target ref="id0"/>
+			<label kind="synchronisation" x="-365" y="-59">y2rns!</label>
+			<label kind="comments" x="-391" y="-102">G_vehicle_EW!</label>
+			<nail x="-272" y="-68"/>
+		</transition>
+		<transition id="id6">
+			<source ref="id2"/>
+			<target ref="id1"/>
+			<label kind="synchronisation" x="-433" y="-221">g2yns!</label>
+		</transition>
+	</template>
+	<template>
+		<name>V_EW</name>
+		<location id="id7" x="102" y="-34">
+			<name x="76" y="-68">Yellow</name>
+		</location>
+		<location id="id8" x="-170" y="-34">
+			<name x="-187" y="-68">Green</name>
+		</location>
+		<location id="id9" x="-34" y="94">
+			<name x="-51" y="59">Red</name>
+		</location>
+		<init ref="id9"/>
+		<transition id="id10">
+			<source ref="id9"/>
+			<target ref="id9"/>
+			<label kind="synchronisation" x="-51" y="170">g2yns?</label>
+			<nail x="34" y="162"/>
+			<nail x="-93" y="162"/>
+		</transition>
+		<transition id="id11">
+			<source ref="id7"/>
+			<target ref="id9"/>
+			<label kind="synchronisation" x="17" y="101">y2rew!</label>
+			<label kind="comments" x="-17" y="59">G_vehicle_NS!</label>
+			<nail x="102" y="93"/>
+		</transition>
+		<transition id="id12">
+			<source ref="id8"/>
+			<target ref="id7"/>
+			<label kind="synchronisation" x="-59" y="-59">g2yew!</label>
+		</transition>
+		<transition id="id13">
+			<source ref="id9"/>
+			<target ref="id8"/>
+			<label kind="synchronisation" x="-119" y="102">y2rns?</label>
+			<label kind="comments" x="-170" y="59">G_vehicle_EW?</label>
+			<nail x="-170" y="93"/>
+		</transition>
+	</template>
+	<template>
+		<name>P_NS</name>
+		<location id="id14" x="256" y="0">
+			<name x="192" y="-8">Green</name>
+		</location>
+		<location id="id15" x="0" y="0">
+			<name x="24" y="-8">Red</name>
+		</location>
+		<init ref="id15"/>
+		<transition id="id16">
+			<source ref="id14"/>
+			<target ref="id15"/>
+			<label kind="synchronisation" x="112" y="104">y2rew?</label>
+			<label kind="comments" x="68" y="30">G_vehicle_EW!</label>
+			<nail x="256" y="96"/>
+			<nail x="0" y="96"/>
+		</transition>
+		<transition id="id17">
+			<source ref="id15"/>
+			<target ref="id14"/>
+			<label kind="synchronisation" x="112" y="-120">y2rns?</label>
+			<label kind="comments" x="68" y="30">G_vehicle_NS?</label>
+			<nail x="0" y="-96"/>
+			<nail x="256" y="-96"/>
+		</transition>
+	</template>
+	<template>
+		<name>P_EW</name>
+		<location id="id18" x="224" y="0">
+			<name x="176" y="-8">Red</name>
+		</location>
+		<location id="id19" x="-32" y="0">
+			<name x="-16" y="-8">Green</name>
+		</location>
+		<init ref="id19"/>
+		<transition id="id20">
+			<source ref="id18"/>
+			<target ref="id19"/>
+			<label kind="synchronisation" x="80" y="104">y2rew?</label>
+			<label kind="comments" x="36" y="30">G_vehicle_NS?</label>
+			<nail x="224" y="96"/>
+			<nail x="-32" y="96"/>
+		</transition>
+		<transition id="id21">
+			<source ref="id19"/>
+			<target ref="id18"/>
+			<label kind="synchronisation" x="80" y="-120">y2rns?</label>
+			<label kind="comments" x="36" y="30">G_vehicle_NS!</label>
+			<nail x="-32" y="-96"/>
+			<nail x="224" y="-96"/>
+		</transition>
+	</template>
+	<system>system  V_NS, V_EW, P_NS, P_EW;
+</system>
+	<queries>
+		<query>
+			<formula>A[] not deadlock</formula>
+			<comment>There is never a deadlock</comment>
+			<result outcome="success" type="quality" timestamp="2023-12-18 10:22:22 +0100">
+			</result>
+		</query>
+		<query>
+			<formula>A[] not (V_NS.Green &amp;&amp; V_EW.Green)</formula>
+			<comment>Car traffic lights are never green at the same time</comment>
+			<result outcome="success" type="quality" timestamp="2023-12-18 10:22:36 +0100">
+			</result>
+		</query>
+		<query>
+			<formula>A[] (V_EW.Green imply P_EW.Red) &amp;&amp; (V_NS.Green imply P_NS.Red)</formula>
+			<comment>When pedestrian lights are green, corresponding car lights should indicate red.</comment>
+			<result outcome="success" type="quality" timestamp="2023-12-18 10:22:46 +0100">
+			</result>
+		</query>
+		<query>
+			<formula>A[] (P_EW.Green imply V_EW.Red) &amp;&amp; (P_NS.Green imply V_NS.Red)</formula>
+			<comment>When pedestrian lights are green, corresponding car lights should indicate red.</comment>
+			<result outcome="success" type="quality" timestamp="2023-12-18 10:22:57 +0100">
+			</result>
+		</query>
+		<query>
+			<formula>E&lt;&gt;P_NS.Green</formula>
+			<comment/>
+			<result outcome="success" type="quality" timestamp="2023-12-18 10:23:04 +0100">
+			</result>
+		</query>
+		<query>
+			<formula>E&lt;&gt;P_EW.Green
+</formula>
+			<comment/>
+			<result outcome="success" type="quality" timestamp="2023-12-18 10:23:10 +0100">
+			</result>
+		</query>
+		<query>
+			<formula>E&lt;&gt;V_NS.Green</formula>
+			<comment/>
+			<result outcome="success" type="quality" timestamp="2023-12-18 10:23:16 +0100">
+			</result>
+		</query>
+		<query>
+			<formula>A[] not (V_NS.Red &amp;&amp; V_EW.Red &amp;&amp; P_NS.Red &amp;&amp; P_EW.Red)</formula>
+			<comment>All lights should never be red at the same time.</comment>
+			<result outcome="success" type="quality" timestamp="2023-12-18 10:23:28 +0100">
+			</result>
+		</query>
+	</queries>
+</nta>

@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.6//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_6.dtd'>
+<nta>
+	<declaration>// Place global declarations here.
+
+typedef int[1,2] signal;
+
+const int NS = 1;
+const int EW = 2;
+
+chan start[signal], started[signal];
+chan stop[signal], stopped[signal];
+
+chan pStart[signal], pStop[signal];</declaration>
+	<template>
+		<name x="5" y="5">CTLight</name>
+		<parameter>signal id</parameter>
+		<declaration>// Place local declarations here.
+
+clock t;</declaration>
+		<location id="id0" x="170" y="34">
+			<name x="127" y="25">Red</name>
+		</location>
+		<location id="id1" x="340" y="-68">
+			<name x="306" y="-102">R_Yellow_G</name>
+		</location>
+		<location id="id2" x="510" y="34">
+			<name x="527" y="25">Green</name>
+		</location>
+		<location id="id3" x="340" y="136">
+			<name x="306" y="153">G_Yellow_R</name>
+		</location>
+		<init ref="id0"/>
+		<transition id="id4">
+			<source ref="id3"/>
+			<target ref="id0"/>
+			<label kind="guard" x="188" y="102">t&gt;=3</label>
+			<label kind="synchronisation" x="161" y="144">stopped[id]!</label>
+			<nail x="170" y="136"/>
+		</transition>
+		<transition id="id5">
+			<source ref="id2"/>
+			<target ref="id3"/>
+			<label kind="synchronisation" x="433" y="144">stop[id]?</label>
+			<label kind="assignment" x="450" y="110">t:=0</label>
+			<nail x="510" y="136"/>
+		</transition>
+		<transition id="id6">
+			<source ref="id1"/>
+			<target ref="id2"/>
+			<label kind="guard" x="450" y="-59">t&gt;=2</label>
+			<label kind="synchronisation" x="425" y="-93">started[id]!</label>
+			<nail x="510" y="-68"/>
+		</transition>
+		<transition id="id7">
+			<source ref="id0"/>
+			<target ref="id1"/>
+			<label kind="synchronisation" x="170" y="-93">start[id]?</label>
+			<label kind="assignment" x="187" y="-59">t:=0</label>
+			<nail x="170" y="-68"/>
+		</transition>
+	</template>
+	<template>
+		<name>PLight</name>
+		<parameter>signal id</parameter>
+		<location id="id8" x="-272" y="-102">
+			<name x="-314" y="-119">Red</name>
+		</location>
+		<location id="id9" x="-68" y="-102">
+			<name x="-51" y="-119">Green</name>
+		</location>
+		<init ref="id8"/>
+		<transition id="id10">
+			<source ref="id9"/>
+			<target ref="id8"/>
+			<label kind="synchronisation" x="-195" y="-34">pStop[id]?</label>
+			<nail x="-68" y="-34"/>
+			<nail x="-272" y="-34"/>
+		</transition>
+		<transition id="id11">
+			<source ref="id8"/>
+			<target ref="id9"/>
+			<label kind="synchronisation" x="-204" y="-195">pStart[id]?</label>
+			<nail x="-272" y="-170"/>
+			<nail x="-68" y="-170"/>
+		</transition>
+	</template>
+	<template>
+		<name>Controller</name>
+		<location id="id12" x="-170" y="-170">
+		</location>
+		<location id="id13" x="-204" y="68">
+		</location>
+		<location id="id14" x="0" y="-136">
+		</location>
+		<location id="id15" x="-119" y="-102">
+			<committed/>
+		</location>
+		<location id="id16" x="204" y="-170">
+			<committed/>
+		</location>
+		<location id="id17" x="-170" y="204">
+			<committed/>
+		</location>
+		<location id="id18" x="204" y="-102">
+		</location>
+		<location id="id19" x="-170" y="-51">
+		</location>
+		<location id="id20" x="-238" y="204">
+		</location>
+		<location id="id21" x="-238" y="-102">
+			<committed/>
+		</location>
+		<init ref="id12"/>
+		<transition id="id22">
+			<source ref="id12"/>
+			<target ref="id14"/>
+			<label kind="synchronisation" x="-127" y="-195">start[EW]!</label>
+			<nail x="-34" y="-170"/>
+		</transition>
+		<transition id="id23">
+			<source ref="id21"/>
+			<target ref="id12"/>
+			<label kind="synchronisation" x="-289" y="-153">pStop[NS]!</label>
+		</transition>
+		<transition id="id24">
+			<source ref="id13"/>
+			<target ref="id21"/>
+			<label kind="synchronisation" x="-348" y="-34">stopped[NS]?</label>
+			<nail x="-238" y="34"/>
+		</transition>
+		<transition id="id25">
+			<source ref="id20"/>
+			<target ref="id13"/>
+			<label kind="synchronisation" x="-323" y="127">stop[NS]!</label>
+			<nail x="-238" y="102"/>
+		</transition>
+		<transition id="id26">
+			<source ref="id17"/>
+			<target ref="id20"/>
+			<label kind="synchronisation" x="-246" y="221">pStart[NS]!</label>
+		</transition>
+		<transition id="id27">
+			<source ref="id19"/>
+			<target ref="id13"/>
+			<label kind="synchronisation" x="-161" y="0">start[NS]!</label>
+			<nail x="-170" y="34"/>
+		</transition>
+		<transition id="id28">
+			<source ref="id18"/>
+			<target ref="id14"/>
+			<label kind="synchronisation" x="76" y="-102">stop[EW]!</label>
+			<nail x="34" y="-102"/>
+		</transition>
+		<transition id="id29">
+			<source ref="id15"/>
+			<target ref="id19"/>
+			<label kind="synchronisation" x="-144" y="-76">pStop[EW]!</label>
+		</transition>
+		<transition id="id30">
+			<source ref="id16"/>
+			<target ref="id18"/>
+			<label kind="synchronisation" x="212" y="-144">pStart[EW]!</label>
+		</transition>
+		<transition id="id31">
+			<source ref="id13"/>
+			<target ref="id17"/>
+			<label kind="synchronisation" x="-161" y="127">started[NS]?</label>
+			<nail x="-170" y="102"/>
+			<nail x="-170" y="170"/>
+		</transition>
+		<transition id="id32">
+			<source ref="id14"/>
+			<target ref="id16"/>
+			<label kind="synchronisation" x="68" y="-195">started[EW]?</label>
+			<nail x="34" y="-170"/>
+			<nail x="136" y="-170"/>
+		</transition>
+		<transition id="id33">
+			<source ref="id14"/>
+			<target ref="id15"/>
+			<label kind="synchronisation" x="-93" y="-102">stopped[EW]?</label>
+			<nail x="-34" y="-102"/>
+		</transition>
+	</template>
+	<system>// Place template instantiations here.
+Car_NS = CTLight(NS);
+Car_EW = CTLight(EW);
+
+Pedestrian_NS = PLight(NS);
+Pedestrian_EW = PLight(EW);
+
+// List one or more processes to be composed into a system.
+system Car_NS, Car_EW, Pedestrian_NS, Pedestrian_EW, Controller;
+</system>
+	<queries>
+		<query>
+			<formula>A[] not deadlock</formula>
+			<comment>There is never a deadlock</comment>
+			<result outcome="success" type="quality" timestamp="2023-12-15 04:21:22 +0100">
+			</result>
+		</query>
+		<query>
+			<formula>A[] not (Car_NS.Green &amp;&amp; Car_EW.Green)</formula>
+			<comment>Car traffic lights are never green at the same time</comment>
+			<result outcome="success" type="quality" timestamp="2023-12-15 04:21:24 +0100">
+			</result>
+		</query>
+		<query>
+			<formula>A[] (Car_NS.Green imply Pedestrian_EW.Red) &amp;&amp; (Car_EW.Green imply Pedestrian_NS.Red)
+</formula>
+			<comment>When car lights are green, corresponding pedestrian lights should indicate red.</comment>
+			<result outcome="success" type="quality" timestamp="2023-12-15 04:21:25 +0100">
+			</result>
+		</query>
+		<query>
+			<formula>A[] (Pedestrian_NS.Green imply Car_EW.Red) &amp;&amp; (Pedestrian_EW.Green imply Car_NS.Red)
+</formula>
+			<comment>When pedestrian lights are green, corresponding car lights should indicate red.</comment>
+			<result outcome="success" type="quality" timestamp="2023-12-15 04:21:26 +0100">
+			</result>
+		</query>
+		<query>
+			<formula>E&lt;&gt;Pedestrian_NS.Green
+</formula>
+			<comment/>
+			<result outcome="success" type="quality" timestamp="2023-12-15 04:34:26 +0100">
+			</result>
+		</query>
+		<query>
+			<formula>E&lt;&gt;Pedestrian_EW.Green
+</formula>
+			<comment/>
+			<result outcome="success" type="quality" timestamp="2023-12-15 04:34:52 +0100">
+			</result>
+		</query>
+		<query>
+			<formula>E&lt;&gt;Car_NS.Green
+</formula>
+			<comment/>
+			<result outcome="success" type="quality" timestamp="2023-12-15 04:35:15 +0100">
+			</result>
+		</query>
+		<query>
+			<formula>E&lt;&gt;Car_EW.Green
+</formula>
+			<comment>E&lt;&gt;Pedestrian_NS.Green 
+E&lt;&gt;(Pedestrian_EW.Green
+E&lt;&gt;(Car_NS.Green
+E&lt;&gt;(Car_EW.Green)
+</comment>
+			<result outcome="success" type="quality" timestamp="2023-12-15 04:35:26 +0100">
+			</result>
+		</query>
+		<query>
+			<formula>A[] not (Car_NS.Red &amp;&amp; Car_EW.Red &amp;&amp; Pedestrian_NS.Red &amp;&amp; Pedestrian_EW.Red)</formula>
+			<comment>All lights should never be red at the same time.</comment>
+			<result outcome="failure" type="quality" timestamp="2023-12-15 04:37:50 +0100">
+			</result>
+		</query>
+	</queries>
+</nta>

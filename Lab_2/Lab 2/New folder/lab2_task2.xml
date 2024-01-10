@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.6//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_6.dtd'>
+<nta>
+	<declaration>// Elevator Variables:
+int currentFloor;
+int targetFloor;
+int requestQueue;
+
+typedef int[0,8] floorNumber;
+
+// Floor Template
+chan request_up[floorNumber];
+chan request_down[floorNumber];
+chan ack[floorNumber];
+
+clock f;</declaration>
+	<template>
+		<name x="5" y="5">Elevator</name>
+		<parameter>floorNumber id</parameter>
+		<declaration>
+</declaration>
+		<location id="id0" x="0" y="0">
+			<name x="-51" y="-17">idle</name>
+		</location>
+		<location id="id1" x="170" y="-170">
+			<name x="195" y="-178">MovingUP</name>
+		</location>
+		<location id="id2" x="170" y="178">
+			<name x="195" y="170">MovingDown</name>
+		</location>
+		<location id="id3" x="340" y="0">
+			<name x="357" y="-17">Loading_Unloading</name>
+		</location>
+		<init ref="id0"/>
+		<transition id="id4">
+			<source ref="id2"/>
+			<target ref="id2"/>
+			<nail x="102" y="238"/>
+			<nail x="238" y="238"/>
+		</transition>
+		<transition id="id5">
+			<source ref="id1"/>
+			<target ref="id1"/>
+			<nail x="102" y="-238"/>
+			<nail x="238" y="-238"/>
+		</transition>
+		<transition id="id6">
+			<source ref="id3"/>
+			<target ref="id0"/>
+			<nail x="340" y="306"/>
+			<nail x="0" y="306"/>
+		</transition>
+		<transition id="id7">
+			<source ref="id2"/>
+			<target ref="id3"/>
+		</transition>
+		<transition id="id8">
+			<source ref="id1"/>
+			<target ref="id3"/>
+		</transition>
+		<transition id="id9">
+			<source ref="id0"/>
+			<target ref="id1"/>
+			<label kind="synchronisation" x="-51" y="-102">request_up[id]?</label>
+			<label kind="assignment" x="-8" y="-85">f:=0</label>
+		</transition>
+		<transition id="id10">
+			<source ref="id0"/>
+			<target ref="id2"/>
+			<label kind="synchronisation" x="-51" y="102">request_down[id]?</label>
+		</transition>
+	</template>
+	<template>
+		<name>Floor</name>
+		<parameter>floorNumber id</parameter>
+		<location id="id11" x="-204" y="-102">
+			<name x="-178" y="-110">idle</name>
+		</location>
+		<location id="id12" x="-204" y="-272">
+			<name x="-170" y="-289">UpRequest</name>
+			<label kind="invariant" x="-272" y="-306">id==currentFloor</label>
+		</location>
+		<location id="id13" x="-204" y="68">
+			<name x="-161" y="59">DownRequest</name>
+			<label kind="invariant" x="-272" y="85">id==currentFloor</label>
+		</location>
+		<init ref="id11"/>
+		<transition id="id14">
+			<source ref="id13"/>
+			<target ref="id11"/>
+			<nail x="-170" y="34"/>
+			<nail x="-170" y="-68"/>
+		</transition>
+		<transition id="id15">
+			<source ref="id11"/>
+			<target ref="id13"/>
+			<label kind="synchronisation" x="-391" y="-25">request_down[id]!</label>
+			<nail x="-238" y="-68"/>
+			<nail x="-238" y="34"/>
+		</transition>
+		<transition id="id16">
+			<source ref="id12"/>
+			<target ref="id11"/>
+			<nail x="-238" y="-238"/>
+			<nail x="-238" y="-136"/>
+		</transition>
+		<transition id="id17">
+			<source ref="id11"/>
+			<target ref="id12"/>
+			<label kind="synchronisation" x="-161" y="-204">request_up[id]!</label>
+			<nail x="-170" y="-136"/>
+			<nail x="-170" y="-238"/>
+		</transition>
+	</template>
+	<template>
+		<name>User</name>
+		<location id="id18" x="-136" y="204">
+			<name x="-144" y="170">F0</name>
+		</location>
+		<location id="id19" x="-136" y="136">
+			<name x="-146" y="102">F1</name>
+		</location>
+		<location id="id20" x="-136" y="68">
+			<name x="-146" y="34">F2</name>
+		</location>
+		<location id="id21" x="-136" y="0">
+			<name x="-146" y="-34">F3</name>
+		</location>
+		<location id="id22" x="-136" y="-68">
+			<name x="-146" y="-102">F4</name>
+		</location>
+		<location id="id23" x="-136" y="-136">
+			<name x="-146" y="-170">F5</name>
+		</location>
+		<location id="id24" x="-136" y="-204">
+			<name x="-146" y="-238">F6</name>
+		</location>
+		<location id="id25" x="-136" y="-272">
+			<name x="-146" y="-306">F7</name>
+		</location>
+		<location id="id26" x="-136" y="-340">
+			<name x="-146" y="-374">F8</name>
+		</location>
+		<init ref="id18"/>
+		<transition id="id27">
+			<source ref="id19"/>
+			<target ref="id18"/>
+			<nail x="-68" y="170"/>
+		</transition>
+		<transition id="id28">
+			<source ref="id20"/>
+			<target ref="id19"/>
+			<nail x="-68" y="102"/>
+		</transition>
+		<transition id="id29">
+			<source ref="id21"/>
+			<target ref="id20"/>
+			<nail x="-68" y="34"/>
+		</transition>
+		<transition id="id30">
+			<source ref="id22"/>
+			<target ref="id21"/>
+			<nail x="-68" y="-34"/>
+		</transition>
+		<transition id="id31">
+			<source ref="id23"/>
+			<target ref="id22"/>
+			<nail x="-68" y="-102"/>
+		</transition>
+		<transition id="id32">
+			<source ref="id24"/>
+			<target ref="id23"/>
+			<nail x="-68" y="-170"/>
+		</transition>
+		<transition id="id33">
+			<source ref="id25"/>
+			<target ref="id24"/>
+			<nail x="-68" y="-238"/>
+		</transition>
+		<transition id="id34">
+			<source ref="id26"/>
+			<target ref="id25"/>
+			<nail x="-68" y="-306"/>
+		</transition>
+		<transition id="id35">
+			<source ref="id25"/>
+			<target ref="id26"/>
+			<nail x="-204" y="-306"/>
+		</transition>
+		<transition id="id36">
+			<source ref="id24"/>
+			<target ref="id25"/>
+			<nail x="-204" y="-238"/>
+		</transition>
+		<transition id="id37">
+			<source ref="id23"/>
+			<target ref="id24"/>
+			<nail x="-204" y="-170"/>
+		</transition>
+		<transition id="id38">
+			<source ref="id22"/>
+			<target ref="id23"/>
+			<nail x="-204" y="-102"/>
+		</transition>
+		<transition id="id39">
+			<source ref="id21"/>
+			<target ref="id22"/>
+			<nail x="-204" y="-34"/>
+		</transition>
+		<transition id="id40">
+			<source ref="id20"/>
+			<target ref="id21"/>
+			<nail x="-204" y="34"/>
+		</transition>
+		<transition id="id41">
+			<source ref="id19"/>
+			<target ref="id20"/>
+			<nail x="-204" y="102"/>
+		</transition>
+		<transition id="id42">
+			<source ref="id18"/>
+			<target ref="id19"/>
+			<nail x="-204" y="170"/>
+		</transition>
+	</template>
+	<system>//Elevator1 = Elevator(floorNumber);
+//Elevator2 = Elevator(floorNumber);
+
+system  User;
+</system>
+	<queries>
+		<query>
+			<formula/>
+			<comment/>
+		</query>
+	</queries>
+</nta>
